@@ -38,6 +38,18 @@ Run this code with cargo run and load 127.0.0.1:7878 in our browser; we should s
 
 Currently, we’re ignoring the request data in http_request and just sending back the contents of the HTML file unconditionally. That means if we try requesting 127.0.0.1:7878/something-else in our browser, we will still get back this same HTML response. At the moment, our server is very limited and does not do what most web servers do. We want to customize our responses depending on the request and only send back the HTML file for a well-formed request to /.
 
+### -> Commit 3 Reflection
+
+![Commit 3 screen capture](/assets/images/commit3.png)
+
+We’re only going to be looking at the first line of the HTTP request, so rather than reading the entire request into a vector, we’re calling next to get the first item from the iterator. The first unwrap takes care of the Option and stops the program if the iterator has no items. The second unwrap handles the Result and has the same effect as the unwrap that was in the map added in Listing 20-2.
+
+Next, we check the request_line to see if it equals the request line of a GET request to the / path. If it does, the if block returns the contents of our HTML file.
+
+If the request_line does not equal the GET request to the / path, it means we’ve received some other request. We’ll add code to the else block in a moment to respond to all other requests.
+
+We’ll also return some HTML for a page to render in the browser indicating the response to the end user.
+
 </details>
 
 ---
