@@ -58,6 +58,15 @@ The first arm is the same as the if block from Listing 20-9. The second arm matc
 
 Start the server using cargo run. Then open two browser windows: one for http://127.0.0.1:7878/ and the other for http://127.0.0.1:7878/sleep. If we enter the / URI a few times, as before, we’ll see it respond quickly. But if we enter /sleep and then load /, we’ll see that / waits until sleep has slept for its full 5 seconds before loading.
 
+### -> Commit 5 Reflection 
+We use ThreadPool::new to create a new thread pool with a configurable number of threads, in this case four. Then, in the for loop, pool.execute has a similar interface as thread::spawn in that it takes a closure the pool should run for each stream. We need to implement pool.execute so it takes the closure and gives it to a thread in the pool to run. 
+
+We chose usize as the type of the size parameter, because we know that a negative number of threads doesn’t make any sense. 
+
+The F type parameter is the one we’re concerned with here; the T type parameter is related to the return value, and we’re not concerned with that. We can see that spawn uses FnOnce as the trait bound on F. This is probably what we want as well, because we’ll eventually pass the argument we get in execute to spawn.git 
+
+We still use the () after FnOnce because this FnOnce represents a closure that takes no parameters and returns the unit type (). Just like function definitions, the return type can be omitted from the signature, but even if we have no parameters, we still need the parentheses.
+
 </details>
 
 ---
