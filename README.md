@@ -26,6 +26,18 @@ BufReader implements the std::io::BufRead trait, which provides the lines method
 
 The browser signals the end of an HTTP request by sending two newline characters in a row, so to get one request from the stream, we take lines until we get a line that is the empty string. Once we’ve collected the lines into the vector, we’re printing them out using pretty debug formatting so we can take a look at the instructions the web browser is sending to our server.
 
+### -> Commit 2 Reflection
+
+![Commit 2 screen capture](/assets/images/commit2.png)
+
+We’ve added fs to the use statement to bring the standard library’s filesystem module into scope. The code for reading the contents of a file to a string should look familiar; we used it in Chapter 12 when we read the contents of a file for our I/O project in Listing 12-4.
+
+Next, we use format! to add the file’s contents as the body of the success response. To ensure a valid HTTP response, we add the Content-Length header which is set to the size of our response body, in this case the size of hello.html.
+
+Run this code with cargo run and load 127.0.0.1:7878 in our browser; we should see our HTML rendered!
+
+Currently, we’re ignoring the request data in http_request and just sending back the contents of the HTML file unconditionally. That means if we try requesting 127.0.0.1:7878/something-else in our browser, we will still get back this same HTML response. At the moment, our server is very limited and does not do what most web servers do. We want to customize our responses depending on the request and only send back the HTML file for a well-formed request to /.
+
 </details>
 
 ---
