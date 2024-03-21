@@ -50,6 +50,14 @@ If the request_line does not equal the GET request to the / path, it means we’
 
 We’ll also return some HTML for a page to render in the browser indicating the response to the end user.
 
+### -> Commit 4 Reflection
+
+We switched from if to match now that we have three cases. We need to explicitly match on a slice of request_line to pattern match against the string literal values; match doesn’t do automatic referencing and dereferencing like the equality method does.
+
+The first arm is the same as the if block from Listing 20-9. The second arm matches a request to /sleep. When that request is received, the server will sleep for 5 seconds before rendering the successful HTML page. The third arm is the same as the else block from Listing 20-9.
+
+Start the server using cargo run. Then open two browser windows: one for http://127.0.0.1:7878/ and the other for http://127.0.0.1:7878/sleep. If we enter the / URI a few times, as before, we’ll see it respond quickly. But if we enter /sleep and then load /, we’ll see that / waits until sleep has slept for its full 5 seconds before loading.
+
 </details>
 
 ---
